@@ -8,14 +8,13 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 const gui = new dat.GUI();
 const world = {
   plane: {
-    width: 400,
-    height: 400,
-    widthSegments: 50,
-    heightSegments: 50,
+    width: 100,
+    height: 100,
+    widthSegments: 100,
+    heightSegments: 100,
   },
 };
 gui.add(world.plane, 'width', 1, 500).onChange(generatePlane);
-
 gui.add(world.plane, 'height', 1, 500).onChange(generatePlane);
 gui.add(world.plane, 'widthSegments', 1, 100).onChange(generatePlane);
 gui.add(world.plane, 'heightSegments', 1, 100).onChange(generatePlane);
@@ -92,6 +91,22 @@ scene.add(light);
 const backLight = new THREE.DirectionalLight(0xffffff, 1);
 backLight.position.set(0, 0, -1);
 scene.add(backLight);
+
+const starGeometry = new THREE.BufferGeometry();
+const starMaterial = new THREE.PointsMaterial({
+  color: 0xffffff,
+});
+const startVerticies = [];
+for (let i = 0; i < 10000; i++) {
+  const x = (Math.random() - 0.5) * 2000;
+  const y = (Math.random() - 0.5) * 2000;
+  const z = (Math.random() - 0.5) * 2000;
+  startVerticies.push(x, y, z);
+}
+
+starGeometry.setAttribute('position', new THREE.Float32BufferAttribute(startVerticies, 3));
+const stars = new THREE.Points(starGeometry, starMaterial);
+scene.add(stars);
 
 const mouse = {
   x: undefined,
@@ -173,6 +188,7 @@ function animate() {
       },
     });
   }
+  stars.rotation.x += 0.0005;
 }
 
 animate();
