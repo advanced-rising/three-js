@@ -1,5 +1,5 @@
-import './style.css';
 import * as THREE from 'three';
+import './style.css';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
 /**
@@ -36,8 +36,29 @@ window.addEventListener('resize', () => {
   camera.aspect = sizes.width / sizes.height;
   camera.updateProjectionMatrix();
 
-  // update renderer
+  // Update renderer
   renderer.setSize(sizes.width, sizes.height);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+});
+/**
+ * Fullscreen
+ */
+window.addEventListener('dblclick', () => {
+  const fullscreenElement = document.fullscreenElement || document.webkitFullscreenElement;
+
+  if (!fullscreenElement) {
+    if (canvas.requestFullscreen) {
+      canvas.requestFullscreen();
+    } else if (canvas.webkitRequestFullscreen) {
+      canvas.webkitRequestFullscreen();
+    }
+  } else {
+    if (document.exitFullscreen) {
+      document.exitFullscreen();
+    } else if (document.webkitExitFullscreen) {
+      document.webkitExitFullscreen();
+    }
+  }
 });
 
 /**
@@ -59,6 +80,7 @@ const renderer = new THREE.WebGLRenderer({
   canvas: canvas,
 });
 renderer.setSize(sizes.width, sizes.height);
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
 /**
  * Animate
