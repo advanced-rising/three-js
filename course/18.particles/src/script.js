@@ -19,14 +19,14 @@ const scene = new THREE.Scene();
  * Textures
  */
 const textureLoader = new THREE.TextureLoader();
-const particleTexture = textureLoader.load('/textures/particles/1.png');
+const particleTexture = textureLoader.load('/textures/particles/8.png');
 
 /**
  * Particles
  */
 // Geometry
 const particlesGeometry = new THREE.BufferGeometry();
-const count = 50000;
+const count = 5000;
 
 const positions = new Float32Array(count * 3);
 const colors = new Float32Array(count * 3);
@@ -49,8 +49,8 @@ particlesMaterial.color = new THREE.Color('#ff88cc');
 
 particlesMaterial.transparent = true;
 particlesMaterial.alphaMap = particleTexture;
-// particlesMaterial.alphaTest = 0.01
-// particlesMaterial.depthTest = false
+particlesMaterial.alphaTest = 0.01;
+particlesMaterial.depthTest = false;
 particlesMaterial.depthWrite = false;
 particlesMaterial.blending = THREE.AdditiveBlending;
 
@@ -116,8 +116,9 @@ const tick = () => {
     let i3 = i * 3;
 
     const x = particlesGeometry.attributes.position.array[i3];
-    particlesGeometry.attributes.position.array[i3 + 1] = Math.sin(elapsedTime + x);
+    particlesGeometry.attributes.position.array[i3 + 1] = Math.tan(elapsedTime + x);
   }
+
   particlesGeometry.attributes.position.needsUpdate = true;
 
   // Update controls
