@@ -45,16 +45,16 @@ export default function example() {
   }
 
   // 그리기
-  let time = Date.now();
 
+  let time = Date.now();
   function draw() {
     const newTime = Date.now();
     const deltaTime = newTime - time;
     time = newTime;
 
-    meshes.forEach((item) => {
-      item.rotation.y += deltaTime * 0.001;
-    });
+    for (let index = 0; index < meshes.length; index++) {
+      meshes[index].rotation.y += deltaTime * 0.001;
+    }
 
     renderer.render(scene, camera);
 
