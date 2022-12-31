@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import Stats from 'stats.js';
 
 // ----- 주제: AxesHelper, GridHelper
 
@@ -14,6 +15,10 @@ export default function example() {
 
   // Scene
   const scene = new THREE.Scene();
+
+  // Stats
+  const stats = new Stats();
+  document.body.append(stats.domElement);
 
   // Camera
   const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -55,7 +60,7 @@ export default function example() {
 
   function draw() {
     const time = clock.getElapsedTime();
-
+    stats.update();
     mesh.rotation.y = time;
 
     renderer.render(scene, camera);
