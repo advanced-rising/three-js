@@ -32,9 +32,9 @@ export default function example() {
   scene.add(directionalLight);
 
   // Mesh
-  const geometry = new THREE.BoxGeometry(1, 1, 1);
+  const geometry = new THREE.SphereGeometry(1, 20, 20);
   const material = new THREE.MeshStandardMaterial({
-    color: 'hotpink',
+    color: 'red',
   });
 
   const group1 = new THREE.Group();
