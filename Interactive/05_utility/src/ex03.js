@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import dat from 'dat.gui';
+import * as dat from 'lil-gui';
 
 // ----- 주제: 초당 프레임 수 보기(Stats)
 
@@ -41,14 +41,10 @@ export default function example() {
 
   // Dat GUI
   const gui = new dat.GUI();
+
   gui.add(mesh.position, 'y', -5, 5, 0.01).name('큐브 Y');
   gui.add(camera.position, 'x', -10, 10, 0.01).name('카메라 X');
-  // gui
-  // 	.add(mesh.position, 'z')
-  // 	.min(-10)
-  // 	.max(3)
-  // 	.step(0.01)
-  // 	.name('메쉬의 Z 위치');
+  gui.add(mesh.position, 'z').min(-10).max(3).step(0.01).name('메쉬의 Z 위치');
 
   camera.lookAt(mesh.position);
 
