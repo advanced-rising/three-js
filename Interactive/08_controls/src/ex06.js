@@ -37,20 +37,20 @@ export default function example() {
   let mesh;
   let material;
   for (let i = 0; i < 20; i++) {
+    const colorOne = 50 + Math.floor(Math.random() * 205);
+    const colorTwo = 50 + Math.floor(Math.random() * 205);
+    const colorThree = 50 + Math.floor(Math.random() * 205);
+    const rgba = 'rgb' + '(' + colorOne + ',' + colorTwo + ',' + colorThree + ')';
+
     material = new THREE.MeshStandardMaterial({
-      color: `rgb(
-				${50 + Math.floor(Math.random() * 205)},
-				${50 + Math.floor(Math.random() * 205)},
-				${50 + Math.floor(Math.random() * 205)}
-			)`,
+      color: rgba,
     });
     mesh = new THREE.Mesh(geometry, material);
     mesh.position.x = (Math.random() - 0.5) * 5;
     mesh.position.y = (Math.random() - 0.5) * 5;
     mesh.position.z = (Math.random() - 0.5) * 5;
-    mesh.name = `box-${i}`;
-    scene.add(mesh);
 
+    scene.add(mesh);
     meshes.push(mesh);
   }
 
@@ -58,7 +58,7 @@ export default function example() {
   const controls = new DragControls(meshes, camera, renderer.domElement);
 
   controls.addEventListener('dragstart', (e) => {
-    console.log(e.object.name);
+    console.log(e.object);
   });
 
   // 그리기

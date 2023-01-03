@@ -33,7 +33,7 @@ export default function example() {
 
   // Controls
   const controls = new FirstPersonControls(camera, renderer.domElement);
-  // controls.movementSpeed = 10;
+  controls.movementSpeed = 5;
   // controls.activeLook = false;
   controls.lookSpeed = 0.1;
   controls.autoForward = true;
@@ -43,12 +43,13 @@ export default function example() {
   let mesh;
   let material;
   for (let i = 0; i < 20; i++) {
+    const colorOne = 50 + Math.floor(Math.random() * 205);
+    const colorTwo = 50 + Math.floor(Math.random() * 205);
+    const colorThree = 50 + Math.floor(Math.random() * 205);
+    const rgba = 'rgb' + '(' + colorOne + ',' + colorTwo + ',' + colorThree + ')';
+
     material = new THREE.MeshStandardMaterial({
-      color: `rgb(
-				${50 + Math.floor(Math.random() * 205)},
-				${50 + Math.floor(Math.random() * 205)},
-				${50 + Math.floor(Math.random() * 205)}
-			)`,
+      color: rgba,
     });
     mesh = new THREE.Mesh(geometry, material);
     mesh.position.x = (Math.random() - 0.5) * 5;

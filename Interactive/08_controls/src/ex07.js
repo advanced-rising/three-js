@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { PointerLockControls } from 'three/examples/jsm/controls/PointerLockControls';
+import { PointerLockControls } from 'three/examples/jsm/controls/PointerLockControls.js';
 import { KeyController } from './KeyController';
 
 // ----- 주제: PointerLockControls에 키보드 컨트롤 추가
@@ -48,18 +48,118 @@ export default function example() {
   // 키보드 컨트롤
   const keyController = new KeyController();
 
-  function walk() {
-    if (keyController.keys['KeyW'] || keyController.keys['ArrowUp']) {
-      controls.moveForward(0.02);
-    }
-    if (keyController.keys['KeyS'] || keyController.keys['ArrowDown']) {
-      controls.moveForward(-0.02);
-    }
-    if (keyController.keys['KeyA'] || keyController.keys['ArrowLeft']) {
-      controls.moveRight(-0.02);
-    }
-    if (keyController.keys['KeyD'] || keyController.keys['ArrowRight']) {
-      controls.moveRight(0.02);
+  function walk(target) {
+    if (target != null) {
+      //카메라 position
+      const origpos = new THREE.Vector3().copy(camera.position);
+      //타겟 position
+      const targetpos = new THREE.Vector3().copy(controls.target);
+
+      //방향 벡터(x2-x1, y2-y1, z2-z1)를 구하고 normalize
+      const dir = new THREE.Vector3(
+        origpos.x - targetpos.x,
+        origpos.y - targetpos.y,
+        origpos.z - targetpos.z
+      ).normalize();
+
+      if (keyController.keys['KeyA']) {
+        const newpos = new THREE.Vector3(
+          targetpos.x + -dir.z * CAMERA_SPEED,
+          targetpos.y,
+          targetpos.z + dir.x * CAMERA_SPEED
+        );
+
+        const camnewpos = new THREE.Vector3(
+          origpos.x + -dir.z * CAMERA_SPEED,
+          origpos.y,
+          origpos.z + dir.x * CAMERA_SPEED
+        );
+
+        //타겟 지점 변경
+        controls.target.set(newpos.x, newpos.y, newpos.z);
+        //카메라 위치 변경
+        camera.position.set(camnewpos.x, camnewpos.y, camnewpos.z);
+      } else if (keyController.keys['KeyD']) {
+        const newpos = new THREE.Vector3(
+          targetpos.x + dir.z * guiData.CAMERA_SPEED,
+          targetpos.y,
+          targetpos.z + -dir.x * guiData.CAMERA_SPEED
+        );
+
+        const camnewpos = new THREE.Vector3(
+          origpos.x + dir.z * guiData.CAMERA_SPEED,
+          origpos.y,
+          origpos.z + -dir.x * guiData.CAMERA_SPEED
+        );
+
+        controls.target.set(newpos.x, newpos.y, newpos.z);
+        camera.position.set(camnewpos.x, camnewpos.y, camnewpos.z);
+      } else if (keyController.keys['KeyW']) {
+        const newpos = new THREE.Vector3(
+          targetpos.x - dir.x * guiData.CAMERA_SPEED,
+          targetpos.y - dir.y * guiData.CAMERA_SPEED,
+          targetpos.z - dir.z * guiData.CAMERA_SPEED
+        );
+
+        const camnewpos = new THREE.Vector3(
+          origpos.x - dir.x * guiData.CAMERA_SPEED,
+          origpos.y - dir.y * guiData.CAMERA_SPEED,
+          origpos.z - dir.z * guiData.CAMERA_SPEED
+        );
+
+        controls.target.set(newpos.x, newpos.y, newpos.z);
+        camera.position.set(camnewpos.x, camnewpos.y, camnewpos.z);
+      } else if (keyController.keys['KeyS']) {
+        const newpos = new THREE.Vector3(
+          targetpos.x + dir.x * guiData.CAMERA_SPEED,
+          targetpos.y + dir.y * guiData.CAMERA_SPEED,
+          targetpos.z + dir.z * guiData.CAMERA_SPEED
+        );
+
+        const camnewpos = new THREE.Vector3(
+          origpos.x + dir.x * guiData.CAMERA_SPEED,
+          origpos.y + dir.y * guiData.CAMERA_SPEED,
+          origpos.z + dir.z * guiData.CAMERA_SPEED
+        );
+
+        controls.target.set(newpos.x, newpos.y, newpos.z);
+        camera.position.set(camnewpos.x, camnewpos.y, camnewpos.z);
+      } else if (keyController.keys['KeyE']) {
+        const newpos = new THREE.Vector3(
+          targetpos.x,
+          targetpos.y + 1 * guiData.CAMERA_SPEED,
+          targetpos.z
+        );
+
+        const camnewpos = new THREE.Vector3(
+          origpos.x,
+          origpos.y + 1 * guiData.CAMERA_SPEED,
+          origpos.z
+        );
+
+        controls.target.set(newpos.x, newpos.y, newpos.z);
+        camera.position.set(camnewpos.x, camnewpos.y, camnewpos.z);
+      } else if (keyController.keys['KeyQ']) {
+        const newpos = new THREE.Vector3(
+          targetpos.x,
+          targetpos.y - 1 * guiData.CAMERA_SPEED,
+          targetpos.z
+        );
+
+        const camnewpos = new THREE.Vector3(
+          origpos.x,
+          origpos.y - 1 * guiData.CAMERA_SPEED,
+          origpos.z
+        );
+
+        controls.target.set(newpos.x, newpos.y, newpos.z);
+        camera.position.set(camnewpos.x, camnewpos.y, camnewpos.z);
+      }
+
+      //컨트롤 업데이트
+      controls.update();
+      //카메라 업데이트
+      camera.updateProjectionMatrix();
     }
   }
 
@@ -68,12 +168,13 @@ export default function example() {
   let mesh;
   let material;
   for (let i = 0; i < 20; i++) {
+    const colorOne = 50 + Math.floor(Math.random() * 205);
+    const colorTwo = 50 + Math.floor(Math.random() * 205);
+    const colorThree = 50 + Math.floor(Math.random() * 205);
+    const rgba = 'rgb' + '(' + colorOne + ',' + colorTwo + ',' + colorThree + ')';
+
     material = new THREE.MeshStandardMaterial({
-      color: `rgb(
-				${50 + Math.floor(Math.random() * 205)},
-				${50 + Math.floor(Math.random() * 205)},
-				${50 + Math.floor(Math.random() * 205)}
-			)`,
+      color: rgba,
     });
     mesh = new THREE.Mesh(geometry, material);
     mesh.position.x = (Math.random() - 0.5) * 5;
@@ -88,7 +189,7 @@ export default function example() {
   function draw() {
     const delta = clock.getDelta();
 
-    walk();
+    walk(targetObj);
 
     renderer.render(scene, camera);
     renderer.setAnimationLoop(draw);

@@ -1,7 +1,8 @@
 import * as THREE from 'three';
 import { PointerLockControls } from 'three/examples/jsm/controls/PointerLockControls';
+import { KeyController } from './KeyController';
 
-// ----- 주제: PointerLockControls
+// ----- 주제: PointerLockControls에 키보드 컨트롤 추가
 
 export default function example() {
   // Renderer
@@ -44,18 +45,35 @@ export default function example() {
     console.log('unlock!');
   });
 
+  // 키보드 컨트롤
+  const keyController = new KeyController();
+
+  function walk() {
+    if (keyController.keys['KeyW'] || keyController.keys['ArrowUp']) {
+      controls.moveForward(0.02);
+    }
+    if (keyController.keys['KeyS'] || keyController.keys['ArrowDown']) {
+      controls.moveForward(-0.02);
+    }
+    if (keyController.keys['KeyA'] || keyController.keys['ArrowLeft']) {
+      controls.moveRight(-0.02);
+    }
+    if (keyController.keys['KeyD'] || keyController.keys['ArrowRight']) {
+      controls.moveRight(0.02);
+    }
+  }
+
   // Mesh
   const geometry = new THREE.BoxGeometry(1, 1, 1);
   let mesh;
   let material;
   for (let i = 0; i < 20; i++) {
-    const colorOne = 50 + Math.floor(Math.random() * 205);
-    const colorTwo = 50 + Math.floor(Math.random() * 205);
-    const colorThree = 50 + Math.floor(Math.random() * 205);
-    const rgba = 'rgb' + '(' + colorOne + ',' + colorTwo + ',' + colorThree + ')';
-
     material = new THREE.MeshStandardMaterial({
-      color: rgba,
+      color: `rgb(
+				${50 + Math.floor(Math.random() * 205)},
+				${50 + Math.floor(Math.random() * 205)},
+				${50 + Math.floor(Math.random() * 205)}
+			)`,
     });
     mesh = new THREE.Mesh(geometry, material);
     mesh.position.x = (Math.random() - 0.5) * 5;
@@ -69,6 +87,8 @@ export default function example() {
 
   function draw() {
     const delta = clock.getDelta();
+
+    walk();
 
     renderer.render(scene, camera);
     renderer.setAnimationLoop(draw);

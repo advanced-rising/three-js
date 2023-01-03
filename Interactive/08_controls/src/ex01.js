@@ -49,10 +49,10 @@ export default function example() {
   let mesh;
   let material;
   for (let i = 0; i < 20; i++) {
-    const color1 = 50 + Math.floor(Math.random() * 205);
-    const color2 = 50 + Math.floor(Math.random() * 205);
-    const color3 = 50 + Math.floor(Math.random() * 205);
-    const rgba = 'rgb' + '(' + color1 + ',' + color2 + ',' + color3 + ')';
+    const colorOne = 50 + Math.floor(Math.random() * 205);
+    const colorTwo = 50 + Math.floor(Math.random() * 205);
+    const colorThree = 50 + Math.floor(Math.random() * 205);
+    const rgba = 'rgb' + '(' + colorOne + ',' + colorTwo + ',' + colorThree + ')';
 
     material = new THREE.MeshStandardMaterial({
       color: rgba,
