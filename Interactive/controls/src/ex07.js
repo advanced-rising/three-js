@@ -50,10 +50,28 @@ export default function example() {
 
   function walk() {
     if (keyController.keys['KeyW'] || keyController.keys['ArrowUp']) {
-      controls.moveForward(0.02);
+      // controls.moveForward(0.02);
+
+      const direction = new THREE.Vector3();
+      camera.getWorldDirection(direction);
+
+      const direction2 = new THREE.Vector3();
+      direction2.x = direction.x * 0.03;
+      direction2.y = direction.y * 0.03;
+      direction2.z = direction.z * 0.03;
+      camera.position.add(direction2);
     }
     if (keyController.keys['KeyS'] || keyController.keys['ArrowDown']) {
-      controls.moveForward(-0.02);
+      // controls.moveForward(-0.02);
+
+      const direction = new THREE.Vector3();
+      camera.getWorldDirection(direction);
+
+      const direction2 = new THREE.Vector3();
+      direction2.x = -direction.x * 0.03;
+      direction2.y = -direction.y * 0.03;
+      direction2.z = -direction.z * 0.03;
+      camera.position.add(direction2);
     }
     if (keyController.keys['KeyA'] || keyController.keys['ArrowLeft']) {
       controls.moveRight(-0.02);
