@@ -26,11 +26,11 @@ export default function example() {
   texture.wrapS = THREE.RepeatWrapping;
   texture.wrapT = THREE.RepeatWrapping;
 
-  // texture.offset.x = 0.3;
-  // texture.offset.y = 0.3;
+  texture.offset.x = 0.3;
+  texture.offset.y = 0.3;
 
-  // texture.repeat.x = 2;
-  // texture.repeat.y = 2;
+  texture.repeat.x = 2;
+  texture.repeat.y = 2;
 
   // texture.rotation = Math.PI * 0.25;
   texture.rotation = THREE.MathUtils.degToRad(60);

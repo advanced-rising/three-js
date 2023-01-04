@@ -59,7 +59,7 @@ export default function example() {
   // const material = new THREE.MeshBasicMaterial({
   const material = new THREE.MeshStandardMaterial({
     // color: 'orangered',
-    map: baseColorTex,
+    map: heightTex,
   });
   const mesh = new THREE.Mesh(geometry, material);
   scene.add(mesh);
