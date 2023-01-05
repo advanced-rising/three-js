@@ -47,7 +47,8 @@ export default function example() {
   const controls = new OrbitControls(camera, renderer.domElement);
 
   // Mesh
-  const geometry = new THREE.BoxGeometry(3, 3, 3);
+  const geometry = new THREE.SphereGeometry(1, 256, 256);
+  // const geometry = new THREE.BoxGeometry(3, 3, 3);
   const material = new THREE.MeshBasicMaterial({
     // const material = new THREE.MeshStandardMaterial({
     // metalness: 2,
