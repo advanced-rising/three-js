@@ -69,16 +69,21 @@ export default function example() {
     renderer.setAnimationLoop(draw);
   }
 
+  let color = 'red';
   function checkIntersects() {
     console.log(preventDragClick.mouseMoved);
     if (preventDragClick.mouseMoved) return;
 
     raycaster.setFromCamera(mouse, camera);
-
     const intersects = raycaster.intersectObjects(meshes);
     for (const item of intersects) {
-      console.log(item.object.name);
-      item.object.material.color.set('red');
+      if (color === 'red') {
+        color = 'blue';
+        item.object.material.color.set('blue');
+      } else {
+        color = 'red';
+        item.object.material.color.set('red');
+      }
       break;
     }
     // if (intersects[0]) {
