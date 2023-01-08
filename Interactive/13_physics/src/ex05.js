@@ -118,7 +118,7 @@ export default function example() {
   function collide(e) {
     const velocity = e.contact.getImpactVelocityAlongNormal();
     console.log(velocity);
-    if (velocity > 3) {
+    if (velocity > 1) {
       sound.currentTime = 0;
       sound.play();
     }
