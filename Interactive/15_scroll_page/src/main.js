@@ -100,7 +100,9 @@ function setSize() {
 }
 
 // 이벤트
+
 window.addEventListener('scroll', setSection);
+
 window.addEventListener('resize', setSize);
 
 draw();
