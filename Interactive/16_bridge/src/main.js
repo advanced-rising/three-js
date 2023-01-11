@@ -131,11 +131,7 @@ for (let i = 0; i < 49; i++) {
       name: 'sideLight',
       container: bar1.mesh,
       z: i * 0.5 - glassUnitSize * 10,
-    })
-  );
-}
-for (let i = 0; i < 49; i++) {
-  sideLights.push(
+    }),
     new SideLight({
       name: 'sideLight',
       container: bar4.mesh,

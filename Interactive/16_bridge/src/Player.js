@@ -11,6 +11,7 @@ export class Player extends Stuff {
     this.depth = 0.5;
 
     cm1.gltfLoader.load('/models/char.glb', (glb) => {
+      console.log(glb);
       // shadow
       glb.scene.traverse((child) => {
         if (child.isMesh) {
